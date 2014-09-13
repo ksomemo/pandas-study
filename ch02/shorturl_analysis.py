@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
+from collections import defaultdict, Counter
 import json
 import os
 
@@ -16,7 +16,10 @@ def main():
 
     tz_counts = get_counts(time_zones)
 
-    return top_counts(tz_counts)
+    return [
+        top_counts(tz_counts),
+        Counter(tz_counts).most_common(10),
+    ]
 
 def get_counts(sequence):
     counts = defaultdict(int) # values initialize to zero
