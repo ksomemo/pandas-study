@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
 import json
 import os
 
@@ -22,12 +23,9 @@ def main():
     }
 
 def get_counts(sequence):
-    counts = {}
+    counts = defaultdict(int) # values initialize to zero
     for x in sequence:
-        if x in counts:
-            counts[x] += 1
-        else:
-            counts[x] = 1
+        counts[x] += 1
 
     return counts
 
