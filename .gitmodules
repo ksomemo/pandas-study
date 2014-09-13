@@ -1,0 +1,3 @@
+[submodule "pydata-book"]
+	path = pydata-book
+	url = git@github.com:ksomemo/pydata-book.git
