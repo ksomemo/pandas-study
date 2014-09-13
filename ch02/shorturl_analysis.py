@@ -16,11 +16,7 @@ def main():
 
     tz_counts = get_counts(time_zones)
 
-    return {
-        'new_york_cnt': tz_counts['America/New_York'],
-        'total': len(time_zones),
-        'city_cnt': len(tz_counts),
-    }
+    return top_counts(tz_counts)
 
 def get_counts(sequence):
     counts = defaultdict(int) # values initialize to zero
@@ -28,6 +24,16 @@ def get_counts(sequence):
         counts[x] += 1
 
     return counts
+
+def top_counts(count_dict, n=10):
+    """
+    :type count_dict: dict
+    :type n: int
+    """
+    counts = [(count, tz) for tz, count in count_dict.items()]
+    counts.sort()
+
+    return counts[-n:]
 
 if __name__ == '__main__':
     print main()
