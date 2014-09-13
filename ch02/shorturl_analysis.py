@@ -13,7 +13,23 @@ def main():
 
     time_zones = [r['tz'] for r in records if 'tz' in r]
 
-    return time_zones
+    tz_counts = get_counts(time_zones)
+
+    return {
+        'new_york_cnt': tz_counts['America/New_York'],
+        'total': len(time_zones),
+        'city_cnt': len(tz_counts),
+    }
+
+def get_counts(sequence):
+    counts = {}
+    for x in sequence:
+        if x in counts:
+            counts[x] += 1
+        else:
+            counts[x] = 1
+
+    return counts
 
 if __name__ == '__main__':
     print main()
