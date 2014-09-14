@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict, Counter
 import json
-import os
 from pandas import DataFrame, Series
 import matplotlib.pyplot as plt
 import numpy as np
+import study
 
 def main():
     """
 
     """
-    datadir = os.path.dirname(os.path.abspath(__file__)) + '/../pydata-book/'
-    path = datadir + '/ch02/usagov_bitly_data2012-03-16-1331923249.txt'
+    path = study.DATA_DIR + 'ch02/usagov_bitly_data2012-03-16-1331923249.txt'
     with open(path) as f:
         records = [json.loads(line) for line in f]
 
