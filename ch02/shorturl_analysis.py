@@ -2,8 +2,9 @@
 from collections import defaultdict, Counter
 import json
 import os
-from pandas import DataFrame
+from pandas import DataFrame, Series
 import matplotlib.pyplot as plt
+import numpy as np
 
 def main():
     """
@@ -29,7 +30,39 @@ def main():
 
     plot(tz_counts[:10])
 
-    return tz_counts[:10]
+    # u'a colomun is user agent.
+    results = Series([x.split()[0] for x in frame.a.dropna()])
+
+    # IDEA can't complement method when you enter frame.a .
+    cframe = frame[frame['a'].notnull()]
+    # return is np.ndarray.
+    operating_system = np.where(cframe['a'].str.contains('Windows'), 'Windows', 'Not Windows')
+
+    # pandas.core.groupby.DataFrameGroupBy
+    # cframe group by args (ex. (tz1, Windows), (tz1, Not Windows), (tz2, Windows), ...)
+    by_tz_os = cframe.groupby(['tz', operating_system])
+    # size => each group sum
+    #
+    # unstack => list to table?
+    #            b c
+    # a b 1 => a 1 2
+    # a c 2    d 1 NaN (not exists)
+    # d b 1
+    #
+    # fillna => NaN to arg (returned type is pandas.core.frame.DataFrame)
+    agg_counts = by_tz_os.size().unstack().fillna(0)
+
+    # sum of group by tz when sum arg is 1
+    # sum of group by os when sum arg is 0
+    # argsort, returns indexes after sorting order by asc
+    indexer = agg_counts.sum(1).argsort()
+
+    count_subset = agg_counts.take(indexer)[-10:]
+    plot(count_subset)
+
+    # u'合計１になるように正規化して、OS分布を見やすくしている
+    normed_subset = count_subset.div(count_subset.sum(1), axis=0)
+    plot(normed_subset)
 
 def get_counts(sequence):
     counts = defaultdict(int) # values initialize to zero
@@ -47,8 +80,8 @@ def top_counts(count_dict, n=10):
 def top_counts_by_counter(count_dict, n=10):
     return Counter(count_dict).most_common(n)
 
-def plot(dataframe):
-    dataframe.plot(kind='barh', rot=0)
+def plot(dataframe, stacked=True):
+    dataframe.plot(kind='barh', rot=0, stacked=stacked)
     # u' if don't use show, output is Out[9]: <matplotlib.axes.AxesSubplot at 0x108b94d10>
     plt.show()
 
