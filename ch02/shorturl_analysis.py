@@ -3,7 +3,7 @@ from collections import defaultdict, Counter
 import json
 import os
 from pandas import DataFrame
-
+import matplotlib.pyplot as plt
 
 def main():
     """
@@ -27,6 +27,8 @@ def main():
     # u'それぞれの数を集計し、TOP10を表示
     tz_counts = clean_tz.value_counts()
 
+    plot(tz_counts[:10])
+
     return tz_counts[:10]
 
 def get_counts(sequence):
@@ -44,6 +46,11 @@ def top_counts(count_dict, n=10):
 
 def top_counts_by_counter(count_dict, n=10):
     return Counter(count_dict).most_common(n)
+
+def plot(dataframe):
+    dataframe.plot(kind='barh', rot=0)
+    # u' if don't use show, output is Out[9]: <matplotlib.axes.AxesSubplot at 0x108b94d10>
+    plt.show()
 
 if __name__ == '__main__':
     print main()
