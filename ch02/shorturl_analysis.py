@@ -2,6 +2,8 @@
 from collections import defaultdict, Counter
 import json
 import os
+from pandas import DataFrame
+
 
 def main():
     """
@@ -14,12 +16,18 @@ def main():
 
     time_zones = [r['tz'] for r in records if 'tz' in r]
 
-    tz_counts = get_counts(time_zones)
+    # u'pandasのデータフレームを使用
+    frame = DataFrame(records)
+    print list(frame.columns.values)
 
-    return [
-        top_counts(tz_counts),
-        Counter(tz_counts).most_common(10),
-    ]
+    # u'列にアクセスして、Noneを置き換える
+    clean_tz = frame['tz'].fillna('Missing')
+    # u' clean_tz == '' => each row index: bool(if values is '' then true)
+    clean_tz[clean_tz == ''] = 'Unknown'
+    # u'それぞれの数を集計し、TOP10を表示
+    tz_counts = clean_tz.value_counts()
+
+    return tz_counts[:10]
 
 def get_counts(sequence):
     counts = defaultdict(int) # values initialize to zero
@@ -29,14 +37,13 @@ def get_counts(sequence):
     return counts
 
 def top_counts(count_dict, n=10):
-    """
-    :type count_dict: dict
-    :type n: int
-    """
     counts = [(count, tz) for tz, count in count_dict.items()]
     counts.sort()
 
     return counts[-n:]
+
+def top_counts_by_counter(count_dict, n=10):
+    return Counter(count_dict).most_common(n)
 
 if __name__ == '__main__':
     print main()
