@@ -10,17 +10,20 @@
 ### インストールしていないもの
 * SciPy
 * pandas
+* pyzmq
 
 ### インストール結果
 ```
 pip install SciPy
 pip install pandas
+pip install pyzmq # for ipython(gui)
 ```
 
 ```
 pandas (0.14.1)
 pytz (2014.7)
 scipy (0.14.0)
+pyzmq (14.3.1)
 ```
 
 pytzはpandasと一緒にインストールされた
@@ -28,7 +31,6 @@ pytzはpandasと一緒にインストールされた
 ### 必須ではなさそうだが、Canopy Expressでインストールできるもの
 * Chaco
 * tornado
-* pyzmq
 
 ### あとでインストールしてもよいもの
 * statsmodels
