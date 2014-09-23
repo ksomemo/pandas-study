@@ -106,3 +106,8 @@ com_crashlytics_export_strings.xml
 # ipython log/notebook
 *.ipynb
 ipython_log.py
+
+# twitter consumer key
+twitter_secret.json
+.my_app_credentials
+

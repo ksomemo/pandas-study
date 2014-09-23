@@ -30,17 +30,50 @@ pytzはpandasと一緒にインストールされた
 
 ### 必須ではなさそうだが、Canopy Expressでインストールできるもの
 * Chaco
+
+### IPython GUI
+* PyQt(PySide)
+* pygments
+
+### IPython Notebook
 * tornado
+* Jinja2
+* markupsafe
+
+### Chapter 6
+#### xml
+* lxml
+
+#### HDF5
+* numexpr
+* cython
+* blosc
+
+pip以外
+
+* brew install lzo
+* HDF5(curl/.configure/make/make install)
+    * ./configure --prefix=/usr/local/hdf5
+    * ↑へのパス export HDF5_DIR
+* PyTables
+    * setup.pyの修正(コンパイルオプションの追加をしないように)
+    * developブランチからインストール
+
+#### Excel
+* xlrd
+
+#### HTML/WebAPI
+* requests
+    * oauthlib
+* twitter
+
+#### MongoDB
+* pymongo
+    * brew install mongodb
 
 ### あとでインストールしてもよいもの
 * statsmodels
-* PyTables
-* PyQt(PySide)
-* xlrd
-* lxml
 * basemap
-* pymongo
-* requests
 
 ## pipでのインストール済み一覧
 
